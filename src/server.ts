@@ -2,12 +2,25 @@ import express, {Request, Response} from "express";
 import path from "path";
 import dotenv from "dotenv";
 import router from "./routes/api";
+import cors from 'cors';
 
 // Instanciando o uso de variáveis de ambiente
 dotenv.config();
 
 // Instanciando o server
 const server = express();
+
+// Definindo o uso do cors
+server.use(cors({
+//Permitindo o acesso por uma origem específica
+    //origin: 'http:www.uol.com'
+//Permitindo acesso geral
+    origin: '*',
+//Métodos liberados
+    methods: ['GET']
+
+    
+}));
 
 //Definindo o caminho estático para pasta public
 server.use(express.static(path.join(__dirname, '../public')));
