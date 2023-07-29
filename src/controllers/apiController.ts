@@ -52,7 +52,35 @@ export const getPhrase = async (req: Request, res: Response) => {
     }else{
         //res.status(204);
         res.json({"Error":"Não existe frase com esse id"})
-    }
+    }    
+}
 
-    
+export const updatePhrase = async (req: Request, res: Response) => {
+    let { id } = req.params;
+    let { author, txt } = req.body;
+
+    let phrase = await Phrase.findByPk(id);
+    if(phrase){
+        phrase.author = author;
+        phrase.txt = txt;
+
+        await phrase.save(); 
+
+        res.json({
+            msg: "Frase alterada com sucesso." 
+        });
+
+    }else{
+        res.json({
+            error: "Não foi possível atualizar a frase."
+        });
+    }
+}
+
+export const deletePhrase = async (req: Request, res: Response) => {
+    let { id } = req.params;
+
+    await Phrase.destroy({where:{id}});
+
+    res.json({msg: "Registro deletado com sucesso."});
 }
