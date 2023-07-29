@@ -30,5 +30,29 @@ export const createPhrase = async (req: Request, res: Response) => {
 
     let newPhrase = await Phrase.create({author, txt});
 
+    res.status(201);
     res.json({idNewPrase: newPhrase.id});
+}
+
+export const listPhrases = async (re: Request, res: Response) => {
+    let phrases = await Phrase.findAll();
+
+    res.status(200);
+    res.json(phrases);
+}
+
+export const getPhrase = async (req: Request, res: Response) => {
+    let id = req.params.id;
+
+    let frase = await Phrase.findByPk(id);
+
+    if(frase){
+        res.status(200);
+        res.json(frase);
+    }else{
+        //res.status(204);
+        res.json({"Error":"Não existe frase com esse id"})
+    }
+
+    
 }
