@@ -21,3 +21,14 @@ export const nome = (req: Request, res: Response) => {
     //res.json({nome: nome});
     res.json({nome});
 }
+
+//===================================================//
+
+export const createPhrase = async (req: Request, res: Response) => {
+    let author: String = req.body.author;
+    let txt:    String = req.body.txt;
+
+    let newPhrase = await Phrase.create({author, txt});
+
+    res.json({idNewPrase: newPhrase.id});
+}
